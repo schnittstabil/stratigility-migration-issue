@@ -22,6 +22,8 @@ This is a demo which shows one of many drawbacks of `ServerMiddlewareInterface::
 +    }
 ```
 
+**Which breaks our existing `tests\legacy.php`: [Travis Build #3](https://travis-ci.org/schnittstabil/stratigility-migration-issue/builds/182821267)**
+
 ## License
 
 MIT © [Michael Mayer](http://schnittstabil.de)
