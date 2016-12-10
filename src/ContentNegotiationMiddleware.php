@@ -5,9 +5,20 @@ namespace Against\Psr\Hacks;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Stratigility\MiddlewareInterface;
+use Interop\Http\Middleware\ServerMiddlewareInterface;
+use Interop\Http\Middleware\DelegateInterface;
 
-class ContentNegotiationMiddleware implements MiddlewareInterface
+class ContentNegotiationMiddleware implements MiddlewareInterface, ServerMiddlewareInterface
 {
+    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
+    {
+        $accept = $request->getHeaderLine('Accept');
+        $type = $this->negotiate($accept);
+        $request = $request->withHeader('Accept', $type);
+
+        return $delegate->process($request);
+    }
+
     /**
      * Just for demonstration.
      *
